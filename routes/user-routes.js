@@ -1,8 +1,8 @@
 import express from 'express'
-import { checkUserAuth } from '../controllers/user-controller';
+import { checkUserAuth } from '../controllers/user-controller.js';
 
 const router = express.Router();
 
 router.post('/login', checkUserAuth);
 
-module.exports = router;
+export default router;

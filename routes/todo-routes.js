@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTodos, createTodo } from '../controllers/todo-controller';
+import { getTodos, createTodo } from '../controllers/todo-controller.js';
 const router = Router();
 
 

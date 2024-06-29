@@ -1,24 +1,29 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Example of using __dirname to access a file
 const todoFilePath = path.join(__dirname, "todos.json");
 
-const readTodos = () => {
-    try {
-        const todosData = fs.readFileSync(todoFilePath, 'utf-8');
-        return JSON.parse(todosData);
-    } catch (error) {
-        if (error.code === 'ENOENT') {
-            console.error(`Todos file not found: ${todoFilePath}`);
-            return [];
-        } else {
-            console.error(`Error reading todos: ${error.message}`);
-            return [];
-        }
-    }
+export const readTodos = () => {
+   try {
+      const todosData = fs.readFileSync(todoFilePath, "utf-8");
+      return JSON.parse(todosData);
+   } catch (error) {
+      if (error.code === "ENOENT") {
+         console.error(`Todos file not found: ${todoFilePath}`);
+         return [];
+      } else {
+         console.error(`Error reading todos: ${error.message}`);
+         return [];
+      }
+   }
 };
 
-const getTodos = (req, res) => {
+export const getTodos = (req, res) => {
    try {
       const todos = readTodos();
       res.send(todos);
@@ -27,7 +32,7 @@ const getTodos = (req, res) => {
    }
 };
 
-const createTodo = (req, res) => {
+export const createTodo = (req, res) => {
    try {
       const todo = req.body.todo;
       addTodo(todo);
@@ -39,11 +44,9 @@ const createTodo = (req, res) => {
    }
 };
 
-const addTodo = (newTodo) => {
-    const todos = readTodos();
-    todos.push(newTodo);
-    const todosJson = JSON.stringify(todos, null, 2);
-    fs.writeFileSync(todoFilePath, todosJson, 'utf-8');
-}
-
-module.exports = { getTodos, createTodo ,addTodo};
+export const addTodo = (newTodo) => {
+   const todos = readTodos();
+   todos.push(newTodo);
+   const todosJson = JSON.stringify(todos, null, 2);
+   fs.writeFileSync(todoFilePath, todosJson, "utf-8");
+};
